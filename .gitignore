@@ -36,7 +36,7 @@ Thumbs.db
 nbproject/**
 nbproject/
 build/
-dist/
+#dist/
 build.xml
 manifest.mf
 
@@ -45,3 +45,4 @@ manifest.mf
 
 lavender@medusa:/media/secondary-drive/bin/java$ 
 
+/dist/
