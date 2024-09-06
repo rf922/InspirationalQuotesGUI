@@ -1,5 +1,6 @@
 package FxGui;
 
+
 import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +31,7 @@ import javafx.stage.Stage;
  * 
  * 
  */
+
 /**
  *
  * @author Rafael
@@ -40,33 +42,7 @@ public class InspirationalQuotes extends Application {
     Text quote;
     Scene sceneSpace;
 
-    /**
-     * A Enumeration for the possible colors and quote combinations
-     */
-    public enum randomOut {
-        RED(Color.RED, "You Can Do It !"), GREEN(Color.GREEN, "You're Way Cool !"),
-        PURPLE(Color.PURPLE, "Your code is Stellar !"), VIOLET(Color.VIOLET, "You're so Far Out !"),
-        PINK(Color.PINK, "You're doing great !"), MAGENTA(Color.MAGENTA, "Go For it !"),
-        MAROON(Color.MAROON, "You're so hip !"), CRIMSON(Color.CRIMSON, "Keep On Keepin On"),
-        BLUEVIOLET(Color.BLUEVIOLET, "Your work is Killer !"), ORANGERED(Color.ORANGERED, "You're Outta Sight !!");
 
-        private final Color color;
-        private final String quote;
-
-        private randomOut(Color color, String quote) {
-            this.color = color;
-            this.quote = quote;
-        }
-
-        public Color getColor() {
-            return color;
-        }
-
-        public String getQuote() {
-            return quote;
-        }
-
-    }
 
     @Override
     public void start(Stage stage) {
@@ -107,8 +83,8 @@ public class InspirationalQuotes extends Application {
     private void handleButton(ActionEvent event) {
 
         Random randomPick = new Random();
-        List<randomOut> colors = new ArrayList<>();
-        Arrays.stream(randomOut.values()).forEach(colors::add);
+        List<InspirationalQuoteEnum> colors = new ArrayList<>();
+        Arrays.stream(InspirationalQuoteEnum.values()).forEach(colors::add);
         Color colorOut = colors.get(randomPick.nextInt(colors.size())).getColor();
         Color current = colorOut.equals(this.quote.getFill()) ? Color.AQUA : colorOut;
         String quoteOut = colors.get(randomPick.nextInt(colors.size())).getQuote();
