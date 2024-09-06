@@ -1,0 +1,47 @@
+vender@medusa:/media/secondary-drive/bin/java$ cat ~/bin/Socket*/.gitignore
+# Compiled Java classes
+*.class
+
+# Package files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor and IDE temporary files
+*.swp
+*~
+*.bak
+*.tmp
+*.tmp_proj
+
+# NetBeans project files and directories
+nbproject/**
+nbproject/
+build/
+dist/
+build.xml
+manifest.mf
+
+# Test directories
+/test
+
+lavender@medusa:/media/secondary-drive/bin/java$ 
+
