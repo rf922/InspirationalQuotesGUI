@@ -1,6 +1,5 @@
 package FxGui;
 
-
 import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,18 +30,20 @@ import javafx.stage.Stage;
  * 
  * 
  */
-
 /**
  *
  * @author Rafael
  */
 public class InspirationalQuotes extends Application {
 
-    Button quoteButton;
-    Text quote;
-    Scene sceneSpace;
-
-
+    private Button quoteButton;
+    private Text quote;
+    private Scene sceneSpace;
+    private static QuoteManager quoteManager;
+    
+    static {// static initializer block to init vars.
+        quoteManager = new QuoteManager();
+    }
 
     @Override
     public void start(Stage stage) {
@@ -60,7 +61,7 @@ public class InspirationalQuotes extends Application {
 
         quoteButton.setOnAction(this::handleButton);
         quoteButton.setAlignment(Pos.CENTER_LEFT);
-        ;
+
         quote.setFont(Font.font("Helvetica", 20));
         quote.setFill(Color.CYAN);
 
@@ -82,19 +83,24 @@ public class InspirationalQuotes extends Application {
      */
     private void handleButton(ActionEvent event) {
 
-        Random randomPick = new Random();
-        List<InspirationalQuoteEnum> colors = new ArrayList<>();
-        Arrays.stream(InspirationalQuoteEnum.values()).forEach(colors::add);
-        Color colorOut = colors.get(randomPick.nextInt(colors.size())).getColor();
-        Color current = colorOut.equals(this.quote.getFill()) ? Color.AQUA : colorOut;
-        String quoteOut = colors.get(randomPick.nextInt(colors.size())).getQuote();
-        String currentQuote = quoteOut.equals(this.quote.getText()) ? colors.get(randomPick.nextInt(colors.size())).getQuote() : quoteOut;
-        this.quote.setFill(current);
-        int fontSize = randomPick.nextInt(50);
-        this.quote.setFont(Font.font(Font.getFontNames().get(randomPick.nextInt(Font.getFontNames().size())), fontSize < 20 ? 23 : fontSize));
+/*  Quote Logic */        
+        String newQuote = quoteManager.getRandomQuote();
+        Color newColor = quoteManager.getRandomColor();
+        this.quote.setFill(newColor);
+        int fontSize = quoteManager.getFontSize();
+        this.quote.setFont(Font
+            .font(quoteManager.getFont(), fontSize < 20 ? 23 : fontSize));
+
+/*  Quote Logic */ 
+        
+        
+        
+/*  Animation Logic */ 
         this.quote.setRotate(this.quote.getRotate() + 45.00);
-        this.quote.setText(currentQuote);
+        this.quote.setText(newQuote);
         this.quote.setX(this.quote.getX() + 2);
+
+
 
         double sceneWidth = this.sceneSpace.getWidth();
         double quoteWidth = this.quote.getLayoutBounds().getWidth();
@@ -103,7 +109,7 @@ public class InspirationalQuotes extends Application {
         KeyFrame segment = new KeyFrame(Duration.ZERO, start);
 
         KeyValue end = new KeyValue(this.quote.translateYProperty(), -1.0
-                * quoteWidth);
+            * quoteWidth);
         KeyFrame endSegment = new KeyFrame(Duration.seconds(2.0), end);
 
         Timeline time = new Timeline(segment, endSegment);
@@ -113,7 +119,7 @@ public class InspirationalQuotes extends Application {
 
         time.setCycleCount(Timeline.INDEFINITE);
         time.play();
-
+/*  Animation Logic */ 
     }
 
     public static void main(String[] args) {
