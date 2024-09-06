@@ -43,6 +43,4 @@ manifest.mf
 # Test directories
 /test
 
-lavender@medusa:/media/secondary-drive/bin/java$ 
-
-/dist/
+#/dist/
