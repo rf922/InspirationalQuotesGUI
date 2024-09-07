@@ -1,4 +1,4 @@
-package FxGui;
+package fxgui;
 
 import animations.FloatingAnimation;
 import animations.RotationAnimation;

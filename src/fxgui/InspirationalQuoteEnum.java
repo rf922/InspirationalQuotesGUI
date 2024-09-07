@@ -3,7 +3,7 @@
  * 
  * 
  */
-package FxGui;
+package fxgui;
 
 import javafx.scene.paint.Color;
 

@@ -3,7 +3,7 @@
  * 
  * 
  */
-package FxGui;
+package fxgui;
 
 import java.util.Arrays;
 import java.util.List;
