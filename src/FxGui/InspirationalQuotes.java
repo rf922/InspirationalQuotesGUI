@@ -16,6 +16,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -72,6 +73,12 @@ public class InspirationalQuotes extends Application {
         
         stage.setTitle("Inspirational Quotes for You");
         stage.setScene(sceneSpace);
+        
+        
+        Image icon = new Image(getClass().getResourceAsStream("/resources/images/icon.png"));
+        stage.getIcons().add(icon);
+        
+        
         stage.show();
 
     }
