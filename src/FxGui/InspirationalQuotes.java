@@ -1,10 +1,6 @@
 package FxGui;
 
 import javafx.util.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -40,7 +36,7 @@ public class InspirationalQuotes extends Application {
     private Text quote;
     private Scene sceneSpace;
     private static QuoteManager quoteManager;
-    
+
     static {// static initializer block to init vars.
         quoteManager = new QuoteManager();
     }
@@ -83,27 +79,16 @@ public class InspirationalQuotes extends Application {
      */
     private void handleButton(ActionEvent event) {
 
-/*  Quote Logic */        
-        String newQuote = quoteManager.getRandomQuote();
-        Color newColor = quoteManager.getRandomColor();
-        this.quote.setFill(newColor);
-        int fontSize = quoteManager.getFontSize();
-        this.quote.setFont(Font
-            .font(quoteManager.getFont(), fontSize < 20 ? 23 : fontSize));
+        /*  Quote Logic */
+        quoteManager.getQuote(quote);
 
-/*  Quote Logic */ 
-        
-        
-        
-/*  Animation Logic */ 
-        this.quote.setRotate(this.quote.getRotate() + 45.00);
-        this.quote.setText(newQuote);
-        this.quote.setX(this.quote.getX() + 2);
-
-
-
-        double sceneWidth = this.sceneSpace.getWidth();
+        /*  Quote Logic */
+ /*  Animation Logic */
+        //double sceneWidth = this.sceneSpace.getWidth();
         double quoteWidth = this.quote.getLayoutBounds().getWidth();
+
+        this.quote.setRotate(this.quote.getRotate() + 45.00);
+        this.quote.setX(this.quote.getX() + 2);
 
         KeyValue start = new KeyValue(this.quote.translateYProperty(), 60.00);
         KeyFrame segment = new KeyFrame(Duration.ZERO, start);
@@ -119,7 +104,7 @@ public class InspirationalQuotes extends Application {
 
         time.setCycleCount(Timeline.INDEFINITE);
         time.play();
-/*  Animation Logic */ 
+        /*  Animation Logic */
     }
 
     public static void main(String[] args) {

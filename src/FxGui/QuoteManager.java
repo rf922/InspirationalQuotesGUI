@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /**
  * A quote manager class to handle the retrieving of quotes and colors
@@ -18,8 +19,8 @@ import javafx.scene.text.Font;
  */
 public class QuoteManager {
 
-    private List<InspirationalQuoteEnum> quotes;
-    private Random randomSelector;
+    private final List<InspirationalQuoteEnum> quotes;
+    private final Random randomSelector;
     private final int MAX_FONT_SIZE = 50;
 
     public QuoteManager() {
@@ -27,15 +28,27 @@ public class QuoteManager {
         randomSelector = new Random();
     }
 
-    public String getRandomQuote() {
+    public void getQuote(Text quote) {
+        String quoteText = getQuoteText();
+        Color quoteColor = getRandomColor();
+        int fontSize = getFontSize();
+
+        quote.setFill(quoteColor);
+        quote.setFont(Font
+            .font(getFont(), fontSize));
+        quote.setFill(quoteColor);
+        quote.setText(quoteText);
+    }
+
+    private String getQuoteText() {
         return quotes.get(randomSelector.nextInt(quotes.size())).getQuote();
     }
 
-    public Color getRandomColor() {
+    private Color getRandomColor() {
         return quotes.get(randomSelector.nextInt(quotes.size())).getColor();
     }
 
-    public String getFont() {
+    private String getFont() {
         return Font
             .getFontNames()
             .get(randomSelector.nextInt(Font
@@ -43,7 +56,7 @@ public class QuoteManager {
                 .size()));
     }
 
-    public int getFontSize() {
+    private int getFontSize() {
         return randomSelector.nextInt(MAX_FONT_SIZE);
     }
 }
