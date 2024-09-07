@@ -3,7 +3,7 @@
  * 
  * 
  */
-package FxGui;
+package animations;
 
 import javafx.scene.text.Text;
 

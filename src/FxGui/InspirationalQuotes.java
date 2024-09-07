@@ -1,5 +1,8 @@
 package FxGui;
 
+import animations.FloatingAnimation;
+import animations.RotationAnimation;
+import animations.TextAnimationStrategy;
 import javafx.util.Duration;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -38,6 +41,7 @@ public class InspirationalQuotes extends Application {
     private Text quote;
     private Scene sceneSpace;
     private static QuoteManager quoteManager;
+    private TextAnimationStrategy textAnimationStrategy;
 
     static {// static initializer block to init vars.
         quoteManager = new QuoteManager();
@@ -52,33 +56,27 @@ public class InspirationalQuotes extends Application {
         paneSpace.getStyleClass().add("vbox");
         quoteButton.getStyleClass().add("button");
         quote.getStyleClass().add("text");
-        
-        
+
         Region spacer = new Region();
         VBox.setVgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
-        
-        
-        
+
         quoteButton.setVisible(true);
         quoteButton.setOnAction(this::handleButton);
-
 
         paneSpace.getChildren().add(this.quote);
         paneSpace.getChildren().add(spacer);
         paneSpace.getChildren().add(this.quoteButton);
 
         this.sceneSpace = new Scene(paneSpace, 640, 440);
-        sceneSpace.getStylesheets().add(getClass().getResource("/resources/css/style.css").toExternalForm());  
+        sceneSpace.getStylesheets().add(getClass().getResource("/resources/css/style.css").toExternalForm());
         sceneSpace.getRoot().getStyleClass().add("scene");
-        
+
         stage.setTitle("Inspirational Quotes for You");
         stage.setScene(sceneSpace);
-        
-        
+
         Image icon = new Image(getClass().getResourceAsStream("/resources/images/icon.png"));
         stage.getIcons().add(icon);
-        
-        
+
         stage.show();
 
     }
@@ -92,30 +90,11 @@ public class InspirationalQuotes extends Application {
 
         quoteManager.getQuote(quote);
 
-
-        
- /*  Animation Logic */
-        //double sceneWidth = this.sceneSpace.getWidth();
-        double quoteWidth = this.quote.getLayoutBounds().getWidth();
-
-        this.quote.setRotate(this.quote.getRotate() + 45.00);
-
-        this.quote.setX(this.quote.getX() + 2);
-
-        KeyValue start = new KeyValue(this.quote.translateYProperty(), 60.00);
-        KeyFrame segment = new KeyFrame(Duration.ZERO, start);
-
-        KeyValue end = new KeyValue(this.quote.translateYProperty(), -1.0
-            * quoteWidth);
-        KeyFrame endSegment = new KeyFrame(Duration.seconds(2.0), end);
-
-        Timeline time = new Timeline(segment, endSegment);
-
-        Rotate rotation = new Rotate(360 / 20);
-        this.quote.getTransforms().add(rotation);
-
-        time.setCycleCount(Timeline.INDEFINITE);
-        time.play();
+        /*  Animation Logic */
+        TextAnimationStrategy floatOff = new FloatingAnimation(FloatingAnimation.Direction.VERTICAL);
+        this.textAnimationStrategy = new RotationAnimation();
+        floatOff.animate(quote);
+        textAnimationStrategy.animate(quote);
         /*  Animation Logic */
     }
 
