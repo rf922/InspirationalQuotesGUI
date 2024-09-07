@@ -16,6 +16,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
@@ -44,28 +45,31 @@ public class InspirationalQuotes extends Application {
     @Override
     public void start(Stage stage) {
         VBox paneSpace = new VBox();
-        paneSpace.setStyle("-fx-background-color: null;");
-        paneSpace.setAlignment(Pos.CENTER);
-        paneSpace.setPadding(new Insets(60, 20, 50, 20));
-        paneSpace.setBorder(new Border(new BorderStroke(Paint.valueOf("Yellow"), BorderStrokeStyle.SOLID, new CornerRadii(0.00), BorderStroke.MEDIUM)));
-        paneSpace.setSpacing(90.00);
         this.quote = new Text("Go on and press the button");
-
         this.quoteButton = new Button("Inspire");
 
+        paneSpace.getStyleClass().add("vbox");
+        quoteButton.getStyleClass().add("button");
+        quote.getStyleClass().add("text");
+        
+        
+        Region spacer = new Region();
+        VBox.setVgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
+        
+        
+        
         quoteButton.setVisible(true);
-
         quoteButton.setOnAction(this::handleButton);
-        quoteButton.setAlignment(Pos.CENTER_LEFT);
 
-        quote.setFont(Font.font("Helvetica", 20));
-        quote.setFill(Color.CYAN);
 
         paneSpace.getChildren().add(this.quote);
+        paneSpace.getChildren().add(spacer);
         paneSpace.getChildren().add(this.quoteButton);
 
-        this.sceneSpace = new Scene(paneSpace, 640, 440, Color.BLACK);
-
+        this.sceneSpace = new Scene(paneSpace, 640, 440);
+        sceneSpace.getStylesheets().add(getClass().getResource("/resources/css/style.css").toExternalForm());  
+        sceneSpace.getRoot().getStyleClass().add("scene");
+        
         stage.setTitle("Inspirational Quotes for You");
         stage.setScene(sceneSpace);
         stage.show();
@@ -79,15 +83,16 @@ public class InspirationalQuotes extends Application {
      */
     private void handleButton(ActionEvent event) {
 
-        /*  Quote Logic */
         quoteManager.getQuote(quote);
 
-        /*  Quote Logic */
+
+        
  /*  Animation Logic */
         //double sceneWidth = this.sceneSpace.getWidth();
         double quoteWidth = this.quote.getLayoutBounds().getWidth();
 
         this.quote.setRotate(this.quote.getRotate() + 45.00);
+
         this.quote.setX(this.quote.getX() + 2);
 
         KeyValue start = new KeyValue(this.quote.translateYProperty(), 60.00);

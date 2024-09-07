@@ -1,0 +1,35 @@
+
+/* 
+    Created on : Sep 6, 2024, 5:28:09 PM
+    Author     : Rf922
+
+*/
+
+
+
+.vbox{
+    -fx-background-color: null;
+    -fx-alignment: center;
+    -fx-padding: 60 20 50 20;
+    -fx-border-color: yellow;
+    -fx-border-style: solid;
+    -fx-border-width: 2;
+    -fx-spacing: 90.0;
+    
+}
+
+
+.button {
+    -fx-width: 100%;
+    
+}
+
+.text {
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 20;
+    -fx-fill: cyan;
+}
+
+.scene {
+    -fx-background-color: black;
+}
