@@ -11,17 +11,36 @@
     -fx-background-color: null;
     -fx-alignment: center;
     -fx-padding: 60 20 50 20;
-    -fx-border-color: yellow;
+    -fx-border-color: darkslategray;
     -fx-border-style: solid;
-    -fx-border-width: 2;
+    -fx-border-width: 1;
     -fx-spacing: 90.0;
     
 }
 
 
 .button {
-    -fx-width: 100%;
-    
+    -fx-background-color: linear-gradient(#ff5400, #be1d00);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-padding: 10 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 10, 0.5, 0, 0);
+    -fx-cursor: hand;
+    -fx-border-color: #ff5400;
+    -fx-border-radius: 30;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#ff872a, #be4a00);
+    -fx-border-color: #ff872a;
+}
+
+.button:pressed {
+    -fx-background-color: linear-gradient(#be4a00, #ff872a);
+    -fx-border-color: #be4a00;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.9), 5, 0.5, 0, 0);
 }
 
 .text {
@@ -30,6 +49,21 @@
     -fx-fill: cyan;
 }
 
+.quote-container {
+    -fx-background-color: gray; 
+    -fx-border-color: white;
+    -fx-border-style: solid;
+        -fx-alignment: center;
+    -fx-padding: 60 20 50 20;
+    -fx-border-width: 3;
+
+}
+
 .scene {
     -fx-background-color: black;
+        -fx-background-image: url("/resources/images/background.png");
+    -fx-background-repeat: repeat;
+    -fx-background-size: auto;
+    -fx-padding: 50 20 50 20;
+    -fx-spacing: 30;
 }

@@ -3,27 +3,16 @@ package fxgui;
 import animations.FloatingAnimation;
 import animations.RotationAnimation;
 import animations.TextAnimationStrategy;
-import javafx.util.Duration;
+import animations.WaveAnimation;
+import audioeffects.AudioEffect;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.paint.*;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Region;
-import javafx.scene.text.Font;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 /*
@@ -33,14 +22,14 @@ import javafx.stage.Stage;
  */
 /**
  *
- * @author Rafael
+ * @author Rf922
  */
 public class InspirationalQuotes extends Application {
 
     private Button quoteButton;
     private Text quote;
     private Scene sceneSpace;
-    private static QuoteManager quoteManager;
+    private final static QuoteManager quoteManager;
     private TextAnimationStrategy textAnimationStrategy;
 
     static {// static initializer block to init vars.
@@ -54,21 +43,35 @@ public class InspirationalQuotes extends Application {
         this.quoteButton = new Button("Inspire");
 
         paneSpace.getStyleClass().add("vbox");
+        StackPane quoteContainer = new StackPane();
+        
+        quoteContainer.setPrefSize(400, 350); 
+        quoteContainer.setMinSize(200, 250); 
+        quoteContainer.setMaxSize(500, 750); 
+        
+        quoteContainer.getStyleClass().add("quote-container");
+        quoteContainer.setVisible(true);
+        
+        
         quoteButton.getStyleClass().add("button");
         quote.getStyleClass().add("text");
 
-        Region spacer = new Region();
-        VBox.setVgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
+
 
         quoteButton.setVisible(true);
         quoteButton.setOnAction(this::handleButton);
 
-        paneSpace.getChildren().add(this.quote);
-        paneSpace.getChildren().add(spacer);
+        quoteContainer.getChildren().add(this.quote);
+//        paneSpace.getChildren().add(this.quote);
+        paneSpace.getChildren().add(quoteContainer);
+//        paneSpace.getChildren().add(spacer);
         paneSpace.getChildren().add(this.quoteButton);
 
-        this.sceneSpace = new Scene(paneSpace, 640, 440);
-        sceneSpace.getStylesheets().add(getClass().getResource("/resources/css/style.css").toExternalForm());
+        this.sceneSpace = new Scene(paneSpace, 540, 440);
+        sceneSpace.getStylesheets()
+            .add(getClass()
+                .getResource("/resources/css/style.css")
+                .toExternalForm());
         sceneSpace.getRoot().getStyleClass().add("scene");
 
         stage.setTitle("Inspirational Quotes for You");
@@ -77,6 +80,8 @@ public class InspirationalQuotes extends Application {
         Image icon = new Image(getClass().getResourceAsStream("/resources/images/icon.png"));
         stage.getIcons().add(icon);
 
+        stage.setMinHeight(450);
+        stage.setMinWidth(300);
         stage.show();
 
     }
@@ -87,14 +92,18 @@ public class InspirationalQuotes extends Application {
      * @param event
      */
     private void handleButton(ActionEvent event) {
+        AudioEffect audioEffect = new AudioEffect(); 
+        audioEffect.playClick();
 
         quoteManager.getQuote(quote);
 
         /*  Animation Logic */
-        TextAnimationStrategy floatOff = new FloatingAnimation(FloatingAnimation.Direction.VERTICAL);
-        this.textAnimationStrategy = new RotationAnimation();
-        floatOff.animate(quote);
-        textAnimationStrategy.animate(quote);
+        TextAnimationStrategy floatOff = new FloatingAnimation();
+        TextAnimationStrategy wave = new WaveAnimation();
+//        this.textAnimationStrategy = new RotationAnimation();
+      //  floatOff.animate(quote);
+        wave.animate(quote);
+        //textAnimationStrategy.animate(quote);
         /*  Animation Logic */
     }
 

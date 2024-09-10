@@ -6,6 +6,7 @@
 package animations;
 
 import animations.TextAnimationStrategy;
+import java.util.Random;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
@@ -16,10 +17,18 @@ import javafx.scene.transform.Rotate;
  * some degree.
  */
 public class RotationAnimation implements TextAnimationStrategy {
+    
+    private Random random;
 
     @Override
     public void animate(Text quote) {
-        Rotate rotation = new Rotate(360 / 20);
+        random = new Random();
+        int direction = random.nextBoolean() ? -1 : 1;
+        double degree = random.nextDouble(-360, 360);
+        
+        
+        
+        Rotate rotation = new Rotate(degree);
         quote.getTransforms().add(rotation);
     }
     

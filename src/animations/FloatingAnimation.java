@@ -6,6 +6,7 @@
 package animations;
 
 import animations.TextAnimationStrategy;
+import java.util.Random;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -14,16 +15,22 @@ import javafx.util.Duration;
 
 /**
  *
- * @author #Your Name <your.name at your.org>
+ * @author #Rf922
  */
 public class FloatingAnimation implements TextAnimationStrategy {
 
     private Direction direction;
+
     
     public static enum  Direction {
         VERTICAL, HORIZONTAL
     }
 
+    public FloatingAnimation(){
+        Random randomSelector = new Random();
+        this.direction = (randomSelector.nextBoolean()) ? Direction.VERTICAL : Direction.HORIZONTAL;
+    }
+    
     public FloatingAnimation(Direction direction){
         this.direction = direction;
     }
