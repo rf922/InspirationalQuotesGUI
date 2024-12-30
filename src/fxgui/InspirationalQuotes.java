@@ -1,16 +1,27 @@
 package fxgui;
 
+import animations.AnimationContext;
 import animations.FloatingAnimation;
 import animations.RotationAnimation;
 import animations.TextAnimationStrategy;
 import animations.WaveAnimation;
 import audioeffects.AudioEffect;
+import static java.lang.Math.random;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -29,11 +40,23 @@ public class InspirationalQuotes extends Application {
     private Button quoteButton;
     private Text quote;
     private Scene sceneSpace;
+    private StackPane quoteContainer;
     private final static QuoteManager quoteManager;
-    private TextAnimationStrategy textAnimationStrategy;
+//    private static final Map<String, TextAnimationStrategy> textAnimationStrategies;
+    private  static final AnimationContext animationContext;
+    private final static Random random;
 
     static {// static initializer block to init vars.
+        random = new Random();
         quoteManager = new QuoteManager();
+        animationContext = new AnimationContext(random);
+        animationContext.addStrategy(new WaveAnimation());
+        animationContext.addStrategy(new FloatingAnimation());
+        animationContext.addStrategy(new RotationAnimation());
+//        textAnimationStrategies = new HashMap<>();
+//        textAnimationStrategies.put("WAVE", new WaveAnimation());
+//        textAnimationStrategies.put("FLOATING", new FloatingAnimation());
+//        textAnimationStrategies.put("ROTATE", new RotationAnimation());
     }
 
     @Override
@@ -43,20 +66,17 @@ public class InspirationalQuotes extends Application {
         this.quoteButton = new Button("Inspire");
 
         paneSpace.getStyleClass().add("vbox");
-        StackPane quoteContainer = new StackPane();
-        
-        quoteContainer.setPrefSize(400, 350); 
-        quoteContainer.setMinSize(200, 250); 
-        quoteContainer.setMaxSize(500, 750); 
-        
+        this.quoteContainer = new StackPane();
+
+        quoteContainer.setPrefSize(400, 350);
+        quoteContainer.setMinSize(200, 250);
+        quoteContainer.setMaxSize(500, 750);
+
         quoteContainer.getStyleClass().add("quote-container");
         quoteContainer.setVisible(true);
-        
-        
+
         quoteButton.getStyleClass().add("button");
         quote.getStyleClass().add("text");
-
-
 
         quoteButton.setVisible(true);
         quoteButton.setOnAction(this::handleButton);
@@ -69,9 +89,9 @@ public class InspirationalQuotes extends Application {
 
         this.sceneSpace = new Scene(paneSpace, 540, 440);
         sceneSpace.getStylesheets()
-            .add(getClass()
-                .getResource("/resources/css/style.css")
-                .toExternalForm());
+                .add(getClass()
+                        .getResource("/resources/css/style.css")
+                        .toExternalForm());
         sceneSpace.getRoot().getStyleClass().add("scene");
 
         stage.setTitle("Inspirational Quotes for You");
@@ -92,20 +112,25 @@ public class InspirationalQuotes extends Application {
      * @param event
      */
     private void handleButton(ActionEvent event) {
-        AudioEffect audioEffect = new AudioEffect(); 
+        AudioEffect audioEffect = new AudioEffect();
         audioEffect.playClick();
+        quoteContainer.getChildren().clear();
+        quoteManager.getQuote(quote, quoteContainer);
 
-        quoteManager.getQuote(quote);
+        double x = Math.max(0, random.nextDouble() * (quoteContainer.getWidth() - quote.getLayoutBounds().getWidth()));
+        double y = Math.max(0, random.nextDouble() * (quoteContainer.getHeight() - quote.getLayoutBounds().getHeight()));
 
-        /*  Animation Logic */
-        TextAnimationStrategy floatOff = new FloatingAnimation();
-        TextAnimationStrategy wave = new WaveAnimation();
-//        this.textAnimationStrategy = new RotationAnimation();
-      //  floatOff.animate(quote);
-        wave.animate(quote);
-        //textAnimationStrategy.animate(quote);
-        /*  Animation Logic */
-    }
+        quote.setTranslateX(x);
+        quote.setTranslateY(y);
+
+//        List<TextAnimationStrategy> strategyList = new ArrayList<>(textAnimationStrategies.values());
+  //      TextAnimationStrategy selectedStrategy = strategyList.get(random.nextInt(strategyList.size()));
+
+     //   animationContext.addStrategy(selectedStrategy);
+        Node node = animationContext.executeStrategy(quote, quoteContainer);
+
+        System.out.println(" [ HANDLE BUTTON : Executing strategy  ] ");
+   }
 
     public static void main(String[] args) {
         launch(args);

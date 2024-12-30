@@ -5,14 +5,15 @@
  */
 package animations;
 
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+
 
 /**
  *
- * @author #Your Name <your.name at your.org>
+ * @author rf922
  */
 public interface TextAnimationStrategy {
-    
-    public void animate(Text quote);
-    
+    public Node animate(Node node, Pane container);
 }

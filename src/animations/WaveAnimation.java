@@ -1,68 +1,75 @@
-/*
- * 
- * 
- * 
- */
 package animations;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
 import javafx.animation.Timeline;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import javafx.scene.text.Font;
+import javafx.scene.paint.Paint;
+import javafx.util.Duration;
+import javafx.scene.Node;
+import javafx.scene.Group;
 
 /**
  *
- * @author #Rf922
+ * @author Rf922
  */
 public class WaveAnimation implements TextAnimationStrategy {
 
     @Override
-    public void animate(Text quote) {
-        HBox letters = new HBox();
-        letters.setSpacing(5);
-        
-        
-        
-        char[] chars =  quote.getText().toCharArray();
-      for (int i = 0; i < chars.length; i++) {
-            Text letter = new Text(String.valueOf(chars[i]));
+    public Node animate(Node node, Pane container) {
+        if (!(node instanceof Text)) {
+            return node;
+        }
+        Text quote = (Text) node;
 
-            KeyValue startX = new KeyValue(letter.translateXProperty(), 0);
-            KeyValue endX = new KeyValue(letter.translateXProperty(), -20+i*2);
-            KeyFrame startFrameX = new KeyFrame(Duration.ZERO, startX);
-            KeyFrame endFrameX = new KeyFrame(Duration.seconds(0.5), endX);
-            
+        // Store original properties
+        Font originalFont = quote.getFont();
+        Paint originalFill = quote.getFill();
 
-            KeyValue startY = new KeyValue(letter.translateYProperty(), 0);
-            KeyValue endY = new KeyValue(letter.translateYProperty(), -20+i*2);
-            KeyFrame startFrame = new KeyFrame(Duration.ZERO, startY);
-            KeyFrame endFrame = new KeyFrame(Duration.seconds(0.5), endY);
+        // Create TextFlow to hold individual letters
+        TextFlow textFlow = new TextFlow();
+        textFlow.setLineSpacing(0);
 
-            
-            Timeline timeline = new Timeline(startFrame, endFrame);
-            Timeline timelineX = new Timeline(startFrameX, endFrameX);
+        String textContent = quote.getText();
 
-            timelineX.setAutoReverse(true);
-            timelineX.setCycleCount(Timeline.INDEFINITE);
-            timelineX.play();
+        for (int i = 0; i < textContent.length(); i++) {
+            char c = textContent.charAt(i);
+            Text letter = new Text(String.valueOf(c));
 
+            // Set original properties
+            letter.setFont(originalFont);
+            letter.setFill(originalFill);
 
-            timeline.setAutoReverse(true);
+            // Create animation for the letter
+            Timeline timeline = new Timeline();
+
+            // Wave effect by animating translateYProperty
+            KeyValue kvUp = new KeyValue(letter.translateYProperty(), -20);
+            KeyValue kvDown = new KeyValue(letter.translateYProperty(), 0);
+            KeyFrame kfUp = new KeyFrame(Duration.seconds(0.5), kvUp);
+            KeyFrame kfDown = new KeyFrame(Duration.seconds(1), kvDown);
+
+            timeline.getKeyFrames().addAll(kfUp, kfDown);
+
+            // Set delay for wave effect
+            timeline.setDelay(Duration.seconds(i * 0.1));
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
-            
-            letters.getChildren().add(letter);
+
+            textFlow.getChildren().add(letter);
         }
-        
-        ((StackPane) quote.getParent()).getChildren().setAll(letters);        
 
+        // Replace the quote node with textFlow in the container
+        int index = container.getChildren().indexOf(quote);
+        if (index != -1) {
+            container.getChildren().set(index, textFlow);
+        } else {
+            container.getChildren().add(textFlow);
+        }
 
-        
-        
+        return textFlow;
     }
-    
 }

@@ -10,6 +10,8 @@ import java.util.Random;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -20,6 +22,7 @@ import javafx.util.Duration;
 public class FloatingAnimation implements TextAnimationStrategy {
 
     private Direction direction;
+    private Random randomSelector = new Random();
 
     
     public static enum  Direction {
@@ -27,7 +30,6 @@ public class FloatingAnimation implements TextAnimationStrategy {
     }
 
     public FloatingAnimation(){
-        Random randomSelector = new Random();
         this.direction = (randomSelector.nextBoolean()) ? Direction.VERTICAL : Direction.HORIZONTAL;
     }
     
@@ -36,15 +38,15 @@ public class FloatingAnimation implements TextAnimationStrategy {
     }
     
     @Override
-    public void animate(Text quote) {
+    public Node animate(Node node, Pane container) {
         KeyValue start, end;
         
         if(this.direction == Direction.VERTICAL){
-            start = new KeyValue(quote.translateYProperty(), 0);
-            end = new KeyValue(quote.translateYProperty(), -50);            
+            start = new KeyValue(node.translateYProperty(), 0);
+            end = new KeyValue(node.translateYProperty(), -50);            
         }else{
-            start = new KeyValue(quote.translateXProperty(), 0);
-            end = new KeyValue(quote.translateXProperty(), 50);
+            start = new KeyValue(node.translateXProperty(), 0);
+            end = new KeyValue(node.translateXProperty(), 50);
         }
         
         KeyFrame startFrame = new KeyFrame(Duration.ZERO, start);
@@ -56,7 +58,7 @@ public class FloatingAnimation implements TextAnimationStrategy {
         timeline.setCycleCount(Timeline.INDEFINITE);
         
         timeline.play();
-        
+        return node;
         
     }
     

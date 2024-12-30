@@ -8,6 +8,7 @@ package fxgui;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -28,7 +29,7 @@ public class QuoteManager {
         randomSelector = new Random();
     }
 
-    public void getQuote(Text quote) {
+    public void getQuote(Text quote, Pane quoteContainer) {
         String quoteText = getQuoteText();
         Color quoteColor = getRandomColor();
         int fontSize = getFontSize();
@@ -38,6 +39,7 @@ public class QuoteManager {
             .font(getFont(), fontSize));
         quote.setFill(quoteColor);
         quote.setText(quoteText);
+        quoteContainer.getChildren().add(quote);
     }
 
     private String getQuoteText() {
