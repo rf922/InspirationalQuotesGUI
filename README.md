@@ -70,6 +70,15 @@ The project is organized into the following packages:
     
     *If using Maven, you can compile and run the project using the appropriate maven commands, for example `mvn compile` and `mvn exec:java -Dexec.mainClass=fxgui.InspirationalQuotes`
 
+## ScreenShots
+
+![image](https://github.com/user-attachments/assets/b134ebc2-76dc-4fa3-932f-d49193323c1a)
+
+![image](https://github.com/user-attachments/assets/4b91f9bb-1515-4836-8bed-376d31545328)
+
+![image](https://github.com/user-attachments/assets/5ccfec9e-a217-470d-9cfc-91fad10c51bc)
+
+
 ## Future Enhancements
 
 *   Add a settings menu to control the animation effects and other user preferences.
